@@ -44,8 +44,7 @@ const NAME = [
  * @return {} element — рандомный элемент
  */
 function getRandomArrayElement(element) {
-  // eslint-disable-next-line no-unused-expressions
-  element[getRandomInteger(0, element.length - 1)];
+  return element[getRandomInteger(0, element.length - 1)];
 }
 
 /**
@@ -74,4 +73,5 @@ function generatePostData() {
     comments: getRandomComments(getRandomInteger(0, 10)),
   };
 }
-console.log(generatePostData());
+const SIMILAR_POST_COUNT = 25;
+const similarPostData = Array.from({length: SIMILAR_POST_COUNT}, generatePostData);
