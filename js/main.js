@@ -1,18 +1,16 @@
-function creatGeneratorInteger(min, max) {
-  let generatorInteger = min + Math.random() * (max + 1 - min);
-  return Math.floor(generatorInteger);
-}
+/**
+ * Выбирает рандомное число из диапазона
+ * @param {integer} min — минимальное число
+ * @param {integer} max — максимальное число
+ * @return {integer} — рандомное число
+ */
 
-function getRandomInteger(a, b) {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+function getRandomInteger(min, max) {
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-};
-
-function getRandomArrayElement(element) {
-  element[getRandomInteger(0, element.length - 1)];
-};
+}
 
 const DESCRIPTION = [
   'Сегодня был здесь',
@@ -40,17 +38,40 @@ const NAME = [
   'Кирилл',
 ];
 
-// function getRandomComments(id, avatar, message, nameComment) {
-//   const id = getRandomInteger(1, 500);
-//   const avatar = 'img/avstar- ' + getRandomInteger(1, 6) + ' .svg';
-//   const message = getRandomArrayElement(MESSAGE);
-//   const nameComment = getRandomArrayElement(NAME);
-// }
+/**
+ * Выбирает рандомное значение из массива
+ * @param {} element — элемент массива
+ * @return {} element — рандомный элемент
+ */
+function getRandomArrayElement(element) {
+  // eslint-disable-next-line no-unused-expressions
+  element[getRandomInteger(0, element.length - 1)];
+}
 
-function photoDescription() ({
-  id: creatGeneratorInteger(1, 25),
-  url: 'photos/ ' + creatGeneratorInteger(1, 25) + ' .jpg',
-  description: getRandomArrayElement(DESCRIPTION),
-  like: getRandomInteger(15, 200),
-});
-console.log(photoDescription());
+/**
+ * Генерация данных для комментариев поста (объект)
+ * @return {Object} — комментарий поста
+ */
+function getRandomComments() {
+  return {
+    id: getRandomInteger(1, 500),
+    avatar: `img/avstar-${getRandomInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGE),
+    nameComment: getRandomArrayElement(NAME),
+  };
+}
+
+/**
+ * Генерация данных одного поста (объект)
+ * @return {Object} — объект поста
+ */
+function generatePostData() {
+  return {
+    id: getRandomInteger(1, 25),
+    url: `photos/${getRandomInteger(1, 25)}.jpg`,
+    description: getRandomArrayElement(DESCRIPTION),
+    like: getRandomInteger(15, 200),
+    comments: getRandomComments(getRandomInteger(0, 10)),
+  };
+}
+console.log(generatePostData());
