@@ -1,1 +1,2 @@
-import {createPostData} from './generate-post-data.js';
+import './generate-post-data.js';
+import './user-thumbnails.js';
