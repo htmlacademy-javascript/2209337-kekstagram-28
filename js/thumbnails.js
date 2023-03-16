@@ -15,7 +15,7 @@ const renderPostPisture = () => {
     similarPostFragment.appendChild(newPictureTemplate);
   });
 
-picturesWrapper.appendChild(similarPostFragment);
+  picturesWrapper.appendChild(similarPostFragment);
 };
 
 const cleanPostPicture = () => {
