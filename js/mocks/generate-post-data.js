@@ -30,31 +30,33 @@ const NAME = [
  * Генерация данных для комментариев поста (объект)
  * @return {Object} — комментарий поста
  */
-function getRandomComments() {
-  return {
-    id: getRandomInteger(1, 500),
-    avatar: `img/avstar-${getRandomInteger(1, 6)}.svg`,
-    message: getRandomArrayElement(MESSAGE),
-    nameComment: getRandomArrayElement(NAME),
-  };
-}
+const getRandomComments = () => ({
+  id: getRandomInteger(1, 500),
+  avatar: `img/avstar-${getRandomInteger(1, 6)}.svg`,
+  message: getRandomArrayElement(MESSAGE),
+  nameComment: getRandomArrayElement(NAME),
+});
 
 /**
  * Генерация данных одного поста (объект)
  * @return {Object} — объект поста
  */
-function generatePostData() {
-  return {
-    id: getRandomInteger(1, 25),
-    url: `photos/${getRandomInteger(1, 25)}.jpg`,
-    description: getRandomArrayElement(DESCRIPTION),
-    likes: getRandomInteger(15, 200),
-    comments: getRandomComments(getRandomInteger(0, 10)),
-  };
-}
+const generatePostData = () => ({
+  id: getRandomInteger(1, 25),
+  url: `photos/${getRandomInteger(1, 25)}.jpg`,
+  description: getRandomArrayElement(DESCRIPTION),
+  likes: getRandomInteger(15, 200),
+  comments: getRandomComments(getRandomInteger(0, 10)),
+});
 
-function createPostData(count) {
+const createPostData = (count) => {
   Array.from({length: count}, generatePostData);
+};
+
+const getSocialComment = () => {
+  src: `img/avstar-${getRandomInteger(1, 6)}.svg`,
+  alt: getRandomArrayElement(NAME),
+  getRandomArrayElement(MESSAGE),
 }
 
 export {createPostData};
