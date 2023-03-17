@@ -1,20 +1,33 @@
-const bigPictureTemplate = document.querySelector('.big-picture');
+import {similarPosts} from './main.js';
 
-const renderBigPicture = () => {
+const bigPicture = document.querySelector('.big-picture').classList.remove('hidden');
+// const commentList = document.querySelector('.social__comments');
+// const commentItem = document.querySelector('.social__comment');
+// const commentImg = document.querySelector('.social__picture');
+// const commentText = document.querySelector('.social__text');
+// const commentCount = document.querySelector('.social__comment-count');
+// const commentLoad = document.querySelector('.comments-loader');
+
+/**
+ * Отрисовывает большую картинку
+ * @param {Element} element — элементы массива
+ */
+
+const showBigPicture = () => {
   const bigPictureFragment = document.createDocumentFragment();
 
-  similarPostBigPicture.forEach((url, comments, likes) => {
-    const newBigPictureTemplate = bigPictureTemplate.cloneNode(true);
-    newBigPictureTemplate.querySelector('.big-picture__img').textContent = url;
-    newBigPictureTemplate.querySelector('.likes-count').textContent = likes;
-    newBigPictureTemplate.querySelector('.comments-count').textContent = comments;
+  similarPosts.forEach((url, comments, likes, description) => {
+    bigPicture.querySelector('.big-picture__img').src = url;
+    bigPicture.querySelector('.likes-count').textContent = likes;
+    bigPicture.querySelector('.comments-count').textContent = comments.length;
+    bigPicture.querySelector('.social__comments').textContent = comments;
+    bigPicture.querySelector('.social__caption').textContent = description;
+    bigPictureFragment.appendChild(bigPicture);
   });
-
-  bigPictureTemplate.appendChild(bigPictureFragment);
 };
 
 const cleanBigPicture = () => {
-  bigPictureTemplate.innerHTML = '';
+  bigPicture.innerHTML = '';
 };
 
-export {renderBigPicture, cleanBigPicture};
+export {showBigPicture, cleanBigPicture};
