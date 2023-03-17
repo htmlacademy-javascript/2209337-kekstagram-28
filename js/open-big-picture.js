@@ -1,9 +1,10 @@
 import {isEscapeKey, isEnterKey} from './mocks/util.js';
-import {renderPostPisture, cleanPostPicture} from './thumbnails.js';
+import {renderthumbnails, cleanPostPicture} from './thumbnails.js';
 
 const fullPicture = document.querySelector('.big-picture');
 const openFullPicture = document.querySelector('.big-picture__img');
 const cancelFullPicture = document.querySelector('.big-picture__cancel');
+
 
 const onDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -15,7 +16,7 @@ const onDocumentEscKeydown = (evt) => {
 const openPicture = () => {
   fullPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentEscKeydown);
-  renderPostPisture();
+  renderthumbnails();
   document.body.classList.add('modal-open');
 };
 
