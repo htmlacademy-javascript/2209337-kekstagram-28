@@ -18,7 +18,4 @@ const getRandomInteger = (min, max) => {
  */
 const getRandomArrayElement = (element) => element[getRandomInteger(0, element.length - 1)];
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-const isEnterKey = (evt) => evt.key === 'Enter';
-
-export {getRandomInteger, getRandomArrayElement, isEscapeKey, isEnterKey};
+export {getRandomInteger, getRandomArrayElement};
