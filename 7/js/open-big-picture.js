@@ -1,10 +1,47 @@
-import {isEscapeKey, isEnterKey} from './mocks/util.js';
-import {renderthumbnails, cleanPostPicture} from './thumbnails.js';
+import {isEscapeKey, isEnterKey} from './util.js';
 
-const fullPicture = document.querySelector('.big-picture');
-const openFullPicture = document.querySelector('.big-picture__img');
-const cancelFullPicture = document.querySelector('.big-picture__cancel');
+const bigPicture = document.querySelector('.big-picture');
+const cancelBigPicture = document.querySelector('.big-picture__cancel');
 
+const commentList = document.querySelector('.social__comments');
+const commentItem = document.querySelector('.social__comment');
+const commentCount = document.querySelector('.social__comment-count');
+const commentLoad = document.querySelector('.comments-loader');
+
+/**
+ * Генерация массива случайных комментариев
+ * @param {object} getRandomComment объект с параметрами для комментариев
+ * @returns {object}
+ */
+const renderComments = (getRandomComment) => {
+  const commentFragment = document.createDocumentFragment;
+
+  getRandomComment.forEach(({avatar, message, nameComment}) => {
+    const comment = commentItem.cloneNode(true);
+
+    comment.querySelector('.social__picture').src = avatar;
+    comment.querySelector('.social__picture').alt = message;
+    comment.querySelector('.social__text').textContent = nameComment;
+    commentFragment.appendChild(comment);
+  });
+  return commentFragment;
+};
+
+/**
+ * Генерирует 5 случайных комментариев
+ * @param {*object} comments случайные комментарии
+ */
+const showComments = (comments) => {
+  const displayedComments = comments.slice(0, 5);
+  const renderFirstComments = renderComments(displayedComments);
+
+  commentCount.firstChild.textContent = `${displayedComments.length } из `;
+  commentList.appendChild(renderFirstComments);
+
+  if (displayedComments.length === comments.length) {
+    commentLoad.classList('hidden');
+  }
+};
 
 const onDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -13,30 +50,39 @@ const onDocumentEscKeydown = (evt) => {
   }
 };
 
-const openPicture = () => {
-  fullPicture.classList.remove('hidden');
+const openBigPicture = ({url, likes, comments, description}) => {
+  bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentEscKeydown);
-  renderthumbnails();
+
+  const bigPicture = ({url,likes, comments, description}) => {
+    bigPicture.querySelector('img').src = url;
+    bigPicture.querySelector('.likes-count').textContent = likes;
+    bigPicture.querySelector('.comments-count').textContent = comments.length;
+    bigPicture.querySelector('.social__caption').textContent = description;
+  };
+  renderComments(getRandomComment);
   document.body.classList.add('modal-open');
+  showComments(comments);
 };
 
 const cancelPicture = () => {
-  fullPicture.classList.add('hidden');
+  bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  cleanPostPicture();
   document.body.classList.remove('modal-open');
 };
 
-openFullPicture.addEventListener('click', () => {
-  openPicture ();
+bigPicture.addEventListener('click', () => {
+  openBigPicture ();
 });
 
-openFullPicture.addEventListener('keydown', (evt) => {
+bigPicture.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
-    openPicture ();
+    openBigPicture ();
   }
 });
 
-cancelFullPicture.addEventListener('click', () => {
+cancelBigPicture.addEventListener('click', () => {
   cancelPicture ();
 });
+
+export {openBigPicture, cancelBigPicture};

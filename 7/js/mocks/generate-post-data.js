@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './mocks/util.js';
+import {getRandomInteger, getRandomArrayElement} from './mocks/util-mocks.js';
 
 const DESCRIPTION = [
   'Сегодня был здесь',

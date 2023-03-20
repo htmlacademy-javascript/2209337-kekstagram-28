@@ -1,4 +1,3 @@
-import {similarPosts} from './main.js';
 import {showBigPicture} from './big-picture.js';
 
 const thumbnailsWrapper = document.querySelector('.pictures');
@@ -8,8 +7,7 @@ const thumbnailsTemplate = document.querySelector('#picture').content;
  * Отрисовавает миниатюры изображение и при клике открывает большое изображение
  * @parm {element} element — элементы массива
  */
-
-const renderthumbnails = () => {
+const renderthumbnails = (similarPosts) => {
   const similarPostFragment = document.createDocumentFragment();
 
   similarPosts.forEach((url, comments, likes, description) => {
