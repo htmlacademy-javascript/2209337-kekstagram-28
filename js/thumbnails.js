@@ -7,7 +7,6 @@ const thumbnailsTemplate = document.querySelector('#picture').content;
  * Отрисовавает миниатюры изображение и при клике открывает большое изображение
  * @parm {element} element — элементы массива
  */
-
 const renderthumbnails = (similarPosts) => {
   const similarPostFragment = document.createDocumentFragment();
 
