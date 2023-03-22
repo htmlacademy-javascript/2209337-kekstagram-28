@@ -1,7 +1,7 @@
 import {isEscapeKey, isEnterKey} from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const cancelBigPicture = document.querySelector('.big-picture__cancel');
+const closeBigPicture = document.querySelector('.big-picture__cancel');
 
 const commentList = document.querySelector('.social__comments');
 const commentItem = document.querySelector('.social__comment');
@@ -46,7 +46,7 @@ const showComments = (comments) => {
 const onDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    cancelPicture();
+    closePicture();
   }
 };
 
@@ -65,7 +65,7 @@ const openBigPicture = ({url, likes, comments, description}) => {
   showComments(comments);
 };
 
-const cancelPicture = () => {
+const closePicture = () => {
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentEscKeydown);
   document.body.classList.remove('modal-open');
@@ -81,8 +81,8 @@ bigPicture.addEventListener('keydown', (evt) => {
   }
 });
 
-cancelBigPicture.addEventListener('click', () => {
-  cancelPicture ();
+closeBigPicture.addEventListener('click', () => {
+  closePicture ();
 });
 
-export {openBigPicture, cancelBigPicture};
+export {openBigPicture, closeBigPicture};
