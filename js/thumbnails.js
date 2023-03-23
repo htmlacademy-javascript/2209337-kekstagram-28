@@ -1,4 +1,4 @@
-import {showBigPicture} from './big-picture.js';
+import {openBigPicture} from './open-big-picture.js';
 
 const thumbnailsWrapper = document.querySelector('.pictures');
 const thumbnailsTemplate = document.querySelector('#picture').content;
@@ -10,7 +10,7 @@ const thumbnailsTemplate = document.querySelector('#picture').content;
 const renderthumbnails = (similarPosts) => {
   const similarPostFragment = document.createDocumentFragment();
 
-  similarPosts.forEach((url, comments, likes, description) => {
+  similarPosts.forEach(similarPost) => {
     const newPictureTemplate = thumbnailsTemplate.cloneNode(true);
     newPictureTemplate.querySelector('.picture__img').textContent = url;
     newPictureTemplate.querySelector('.picture__comments').textContent = comments.length;
@@ -19,9 +19,9 @@ const renderthumbnails = (similarPosts) => {
     similarPostFragment.appendChild(newPictureTemplate);
 
     newPictureTemplate.addEventListener('click', () => {
-      showBigPicture(url, comments, likes, description);
-    });
-  });
+      openBigPicture(similarPost);
+    })
+  };
 
   thumbnailsWrapper.appendChild(similarPostFragment);
 };

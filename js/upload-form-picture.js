@@ -1,77 +1,87 @@
-const formFilters = document.querySelector('.img-filters__form');
-const formImgUpload = document.querySelector('.img-upload__form');
-const imgEditing = document.querySelector('.img-upload__overlay');
-const hashtagsInput = document.querySelector('.text__hashtags');
-const commentsInput = document.querySelector('.text__description');
+import {isEscapeKey} from './util.js';
+
 const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_NUMBERS = 5;
 const COMMENT_MAX_LENGTH = 140;
 
-new Pristine(formFilters);
-new Pristine(formImgUpload);
+const formImgUpload = document.querySelector('.img-upload__form');
 
-formFilters.addEventListener('submit', (evt) => {
+const formImgUploadPristine = new Pristine(formImgUpload);
+
+formImgUpload.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const isValidFilters = Pristine.validate();
   if (isValidFilters) {
-    console.log('Можно отправлять');
-  } else {
-    console.log('Форма невалидна');
+    EventTarget.submit;
   }
 });
 
-formFilters.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  const isValidImgUpload = Pristine.validate();
-  if (isValidImgUpload) {
-    console.log('Можно отправлять');
-  } else {
-    console.log('Форма невалидна');
-  }
-});
+const hashtagsElement = document.querySelector('.text__hashtags');
 
 const hashtagValidate = () => {
-  const hashtagArray = hashtagsInput.value.toLowerCase().trim().split(' ');
+  const hashtagArray = hashtagsElement.value.toLowerCase().trim().split(' ');
   const newHashtagArray = new Set(hashtagArray);
-
-  if (!hashtagsInput.value) {
-    hashtagsInput.setCustomValidity('');
+  if (hashtagArray.length !== newHashtagArray.length) {
+    hashtagsElement.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
+  } else if (!hashtagsInput.value) {
+    hashtagsElement.setCustomValidity('');
     return false;
+  } else (hashtagArray.length > HASHTAG_MAX_NUMBERS) {
+    hashtagsElement.setCustomValidity(`нельзя указать больше ${HASHTAG_MAX_NUMBERS} хэш-тегов`);
   }
 
   for (let i = 0; i < hashtagArray.length; i++) {
     if (!HASHTAG_VALID_REGEX.test(hashtagArray[i])) {
-      hashtagsInput.setCustomValidity('хэш-тег начинается с символа # (решётка) строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д. максимальная длина одного хэш-тега 20 символов, включая решётку');
+      hashtagsElement.setCustomValidity('хэш-тег начинается с символа # (решётка) строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д. максимальная длина одного хэш-тега 20 символов, включая решётку');
       return false;
-    } else if (hashtagArray.length > HASHTAG_MAX_NUMBERS) {
-      hashtagsInput.setCustomValidity(`нельзя указать больше ${HASHTAG_MAX_NUMBERS} хэш-тегов`);
-    } else if (hashtagArray.length !== newHashtagArray.size) {
-      hashtagsInput.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
-    } else {
+    }  else {
       hashtagsInput.setCustomValidity('');
     }
   }
-  hashtagsInput.reportValidity();
+  hashtagsElement.reportValidity();
 };
 
+const commentsElement = document.querySelector('.text__description');
+
 const commentsValiate = () => {
-  const commentsLength = commentsInput.value.length;
+  const commentsLength = commentsElement.value.length;
 
   if (commentsLength > COMMENT_MAX_LENGTH) {
-    commentsInput.setCustomValidity(`длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`);
+    commentsElement.setCustomValidity(`длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`);
   } else {
-    commentsInput.setCustomValidity('');
+    commentsElement.setCustomValidity('');
   }
 };
 
+const onDocumentEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUploadFormPicture();
+  }
+};
+
+const uploadFileElement = document.querySelector('.upload-file');
+const imgEditing = document.querySelector('.img-upload__overlay');
+
 const openUploadFormPicture = () => {
-  imgEditing.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-}
+  uploadFileElement.addEventListener('change', () => {
+    imgEditing.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+  });
+  document.addEventListener('keydown', onDocumentEscKeydown);
+  cleanUploadFile ();
+};
+
+const cleanUploadFile = () => {
+  uploadFileElement.innerHTML = '';
+};
+
+const uploadCancelElement = document.querySelector('.upload-cancel');
 
 const closeUploadFormPicture = () => {
-  imgEditing.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-}
+  uploadCancelElement.addEventListener('click', () => {
+    imgEditing.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  });
+};
