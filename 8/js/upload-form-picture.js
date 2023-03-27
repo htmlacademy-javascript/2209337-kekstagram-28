@@ -65,10 +65,10 @@ const uploadFileElement = document.querySelector('.upload-file');
 const imgEditing = document.querySelector('.img-upload__overlay');
 
 const openUploadFormPicture = () => {
-  uploadFileElement.addEventListener('change', () => {
+  uploadFileElement.onchange = function () {
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
-  });
+  };
   document.addEventListener('keydown', onDocumentEscKeydown);
   cleanUploadFile ();
 };
