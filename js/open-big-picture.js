@@ -2,8 +2,6 @@ import {isEscapeKey} from './util.js';
 
 const MAX_COMMENTS_NUMBER = 5;
 
-const closeBigPicture = document.querySelector('.big-picture__cancel');
-
 const commentTemplateElement = document.querySelector('.social__comment');
 /**
  * Отрисовка комментария для поста
@@ -84,6 +82,8 @@ function closePicture () {
   document.removeEventListener('keydown', onDocumentEscKeydown);
   document.body.classList.remove('modal-open');
 }
+
+const closeBigPicture = document.querySelector('.big-picture__cancel');
 
 closeBigPicture.addEventListener('click', () => {
   closePicture ();
