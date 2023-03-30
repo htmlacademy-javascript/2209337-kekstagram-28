@@ -13,7 +13,7 @@ formImgUpload.addEventListener('submit', (evt) => {
 
   const isValidFilters = Pristine.validate();
   if (isValidFilters) {
-    EventTarget.submit;
+    evt.target.submit();
   }
 });
 
@@ -24,10 +24,10 @@ const hashtagValidate = () => {
   const newHashtagArray = new Set(hashtagArray);
   if (hashtagArray.length !== newHashtagArray.length) {
     hashtagsElement.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
-  } else if (!hashtagsInput.value) {
+  } else if (!hashtagsElement.value) {
     hashtagsElement.setCustomValidity('');
     return false;
-  } else (hashtagArray.length > HASHTAG_MAX_NUMBERS) {
+  } else if (hashtagArray.length > HASHTAG_MAX_NUMBERS) {
     hashtagsElement.setCustomValidity(`нельзя указать больше ${HASHTAG_MAX_NUMBERS} хэш-тегов`);
   }
 
@@ -35,8 +35,8 @@ const hashtagValidate = () => {
     if (!HASHTAG_VALID_REGEX.test(hashtagArray[i])) {
       hashtagsElement.setCustomValidity('хэш-тег начинается с символа # (решётка) строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д. максимальная длина одного хэш-тега 20 символов, включая решётку');
       return false;
-    }  else {
-      hashtagsInput.setCustomValidity('');
+    } else {
+      hashtagsElement.setCustomValidity('');
     }
   }
   hashtagsElement.reportValidity();
@@ -73,15 +73,15 @@ const openUploadFormPicture = () => {
   cleanUploadFile ();
 };
 
-const cleanUploadFile = () => {
+function cleanUploadFile() {
   uploadFileElement.innerHTML = '';
-};
+}
 
 const uploadCancelElement = document.querySelector('.upload-cancel');
 
-const closeUploadFormPicture = () => {
+function closeUploadFormPicture () {
   uploadCancelElement.addEventListener('click', () => {
     imgEditing.classList.add('hidden');
     document.body.classList.remove('modal-open');
   });
-};
+}
