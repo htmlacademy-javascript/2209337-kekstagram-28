@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './mocks/util-mocks.js';
+import {getRandomInteger, getRandomArrayElement} from './util-mocks.js';
 
 const DESCRIPTION = [
   'Сегодня был здесь',
@@ -46,11 +46,14 @@ const generatePostData = () => ({
   url: `photos/${getRandomInteger(1, 25)}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomInteger(15, 200),
-  comment: getRandomComment(getRandomInteger(0, 10)),
+  comments: Array.from({length: getRandomInteger(0, 10)}, getRandomComment),
 });
 
-const createPostData = (count) => {
-  Array.from({length: count}, generatePostData);
-};
+/**
+ * Генерация постов
+ * @param {number} count количeство генерируемых постов
+ * @returns {Array} массив постов
+ */
+const createPostData = (count) => Array.from({ length: count }, generatePostData);
 
 export {createPostData};

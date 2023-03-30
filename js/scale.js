@@ -1,0 +1,40 @@
+const MAX_SCALE_VALUE = 100;
+const MIN_SCALE_VALUE = 25;
+const STEP_VALUE = 25;
+
+const scaleSmallerButton = document.querySelector('.scale__control--smaller');
+const scaleBiggerButton = document.querySelector('.scale__control--bigger');
+const scaleValue = document.querySelector('.scale__control--value');
+const scaleUploadImg = document.querySelector('.img-upload__preview img');
+
+/**
+ * @param (value) значение масштаба выбраное пользователем
+ * @returns значение записаное в стили
+ */
+const getScaleValue = () => {
+  const currentValue = parseFloat(scaleValue.value);
+  scaleUploadImg.style.transform = `scale(${currentValue / 100})`;
+};
+
+const getMinScale = () => {
+  const currentValue = parseFloat(scaleValue.value);
+
+  if (currentValue === MIN_SCALE_VALUE) {
+    return false;
+  }
+  scaleValue.value = `${currentValue - STEP_VALUE}%`;
+  getScaleValue();
+};
+
+const getMaxScale = () => {
+  const currentValue = parseFloat(scaleValue.value);
+
+  if (currentValue === MAX_SCALE_VALUE) {
+    return false;
+  }
+  scaleValue.value = `${currentValue + STEP_VALUE}%`;
+  getScaleValue();
+};
+
+scaleSmallerButton.addEventListener('click', getMinScale);
+scaleBiggerButton.addEventListener('click', getMaxScale);
