@@ -36,5 +36,9 @@ const getMaxScale = () => {
   getScaleValue();
 };
 
-scaleSmallerButton.addEventListener('click', getMinScale);
-scaleBiggerButton.addEventListener('click', getMaxScale);
+const initScale = () => {
+  scaleSmallerButton.addEventListener('click', getMinScale);
+  scaleBiggerButton.addEventListener('click', getMaxScale);
+};
+
+export {initScale};

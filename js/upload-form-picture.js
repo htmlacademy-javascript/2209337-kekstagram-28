@@ -19,6 +19,7 @@ formImgUpload.addEventListener('submit', (evt) => {
 
 const hashtagsElement = document.querySelector('.text__hashtags');
 
+//Валидация хэштегов
 const hashtagValidate = () => {
   const hashtagArray = hashtagsElement.value.toLowerCase().trim().split(' ');
   const newHashtagArray = new Set(hashtagArray);
@@ -44,6 +45,7 @@ const hashtagValidate = () => {
 
 const commentsElement = document.querySelector('.text__description');
 
+//Валидация комменария
 const commentsValiate = () => {
   const commentsLength = commentsElement.value.length;
 
@@ -85,3 +87,5 @@ function closeUploadFormPicture () {
     document.body.classList.remove('modal-open');
   });
 }
+
+export {openUploadFormPicture, commentsValiate, hashtagValidate, formImgUploadPristine};
