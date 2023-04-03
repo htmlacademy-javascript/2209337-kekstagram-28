@@ -1,4 +1,4 @@
-import {openBigPicture, closeBigPicture} from './open-big-picture.js';
+import {openBigPicture} from './open-big-picture.js';
 
 const thumbnailsWrapper = document.querySelector('.pictures');
 const thumbnailsTemplate = document.querySelector('#picture').content;
@@ -16,13 +16,12 @@ const renderThumbnails = (similarPosts) => {
     newPictureTemplate.querySelector('.picture__img').src = url;
     newPictureTemplate.querySelector('.picture__comments').textContent = comments.length;
     newPictureTemplate.querySelector('.picture__likes').textContent = likes;
-    
-    newPictureTemplate.addEventListener('click', () => {
+
+    newPictureTemplate.querySelector('.picture__img').addEventListener('click', () => {
       openBigPicture(similarPost);
     });
     similarPostFragment.appendChild(newPictureTemplate);
   });
-
   thumbnailsWrapper.appendChild(similarPostFragment);
 };
 

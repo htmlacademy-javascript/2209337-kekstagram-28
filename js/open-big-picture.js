@@ -8,11 +8,11 @@ const commentTemplateElement = document.querySelector('.social__comment');
  * @param {object[]} массив всех комментариев для поста
  * @returns {object} кусок разметки
  */
-const renderComment = ({avatar, message, nameComment}) => {
+const renderComment = ({avatar, nameComment, message}) => {
   const comment = commentTemplateElement.cloneNode(true);
   comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = message;
-  comment.querySelector('.social__text').textContent = nameComment;
+  comment.querySelector('.social__picture').alt = `Изображение пользователя ${nameComment}`;
+  comment.querySelector('.social__text').textContent = message;
 
   return comment;
 };
@@ -26,9 +26,9 @@ const commentLoadButton = document.querySelector('.comments-loader');
  */
 const renderComments = (allComments) => {
   const firstComments = allComments.slice(0, MAX_COMMENTS_NUMBER);
-  const commentFragment = document.createDocumentFragment;
+  const commentFragment = document.createDocumentFragment();
   firstComments.forEach((comment) => {
-    const commentElement = renderComments(comment);
+    const commentElement = renderComment(comment);
     commentFragment.appendChild(commentElement);
   });
   commentListElement.appendChild(commentFragment);
@@ -40,8 +40,8 @@ const renderComments = (allComments) => {
     commentLoadButton.classList.remove('hidden');
   } else if (firstComments < allComments) {
     commentLoadButton.addEventListener('click', () => {
-      const followComments = allComments.slice(0, MAX_COMMENTS_NUMBER);
-      const commentFragmentFollow = document.createDocumentFragment;
+      const followComments = allComments.slice(1, MAX_COMMENTS_NUMBER);
+      const commentFragmentFollow = document.createDocumentFragment();
       followComments.forEach((comment) => {
         const commentElementFollow = renderComments(comment);
         commentFragmentFollow.appendChild(commentElementFollow);
@@ -51,7 +51,6 @@ const renderComments = (allComments) => {
       commentCountElement.firstChild.textContent = `${followComments.length} из ${allComments.length}`;
     });
   }
-  // Если усть кнопка, вешаем событие на отрисовку остальных комменатриев (внутри этой функции проверка показывать или убирать кнопк дальше)
 };
 
 const onDocumentEscKeydown = (evt) => {

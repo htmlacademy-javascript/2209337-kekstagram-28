@@ -32,7 +32,7 @@ const NAME = [
  */
 const getRandomComment = () => ({
   id: getRandomInteger(1, 500),
-  avatar: `img/avstar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGE),
   nameComment: getRandomArrayElement(NAME),
 });
