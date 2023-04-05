@@ -1,52 +1,52 @@
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
-const imgUploadElemrnt = document.querySelector('.img-upload__preview');
+const imgUploadElement = document.querySelector('.img-upload__preview');
 const optionEffectElement = document.querySelector('.effects__radio');
 
 valueElement.value = 100;
 
 const examplesEffect = {
-  GRAYSCALE: {
-    RANGE: {
-      MIN: 0,
-      MAX: 1,
+  grayscale: {
+    range: {
+      min: 0,
+      max: 1,
     },
-    START: 100,
-    STEP: 0.1,
+    start: 100,
+    step: 0.1,
   },
-  SEPIA: {
-    RANGE: {
-      MIN: 0,
-      MAX: 1,
+  sepia: {
+    range: {
+      min: 0,
+      max: 1,
     },
-    START: 100,
-    STEP: 0.1,
+    start: 100,
+    step: 0.1,
   },
-  INVERT: {
-    RANGE: {
-      MIN: 0,
-      MAX: 100,
+  invert: {
+    range: {
+      min: 0,
+      max: 100,
     },
-    START: 100,
-    STEP: 1,
+    start: 100,
+    step: 1,
   },
-  BLUR: {
-    RANGE: {
-      MIN: 0,
-      MAX: 3,
+  blur: {
+    range: {
+      min: 0,
+      max: 3,
     },
-    START: 100,
-    STEP: 0.1,
+    start: 100,
+    step: 0.1,
   },
-  BRIGHTNESS: {
-    RANGE: {
-      MIN:1,
-      MAX: 3,
+  brightness: {
+    range: {
+      min:1,
+      max: 3,
     },
-    START: 100,
-    STEP: 0.1,
+    start: 100,
+    step: 0.1,
   }
-}
+};
 
 /**
  * Функция для выбора эффекта
@@ -58,8 +58,8 @@ const choiceEffect = (slidrValue) => {
     INVERT: `filter: invert(${slidrValue}`,
     BLUR: `filter: blur(${slidrValue}`,
     BRIGHTNESS: `filter: brightness(${slidrValue}`,
-  }
-}
+  };
+};
 
 sliderElement.noUiSlider.on('update', () => {
   const slidrValue = sliderElement.noUiSlider.get();

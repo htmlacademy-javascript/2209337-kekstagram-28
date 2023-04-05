@@ -4,17 +4,20 @@ const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_NUMBERS = 5;
 const COMMENT_MAX_LENGTH = 140;
 
-const formImgUpload = document.querySelector('.img-upload__form');
 
-const formImgUploadPristine = new Pristine(formImgUpload);
+// Инизиализация Pristine.js
+const uploadForm = document.querySelector('#upload-select-image');
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  // errorTextClass: ''
+});
 
-formImgUpload.addEventListener('submit', (evt) => {
+// Отправка формы
+uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
-  const isValidFilters = Pristine.validate();
-  if (isValidFilters) {
-    evt.target.submit();
-  }
+  pristine.validate();
 });
 
 const hashtagsElement = document.querySelector('.text__hashtags');
@@ -56,6 +59,16 @@ const commentsValiate = () => {
   }
 };
 
+pristine.addValidator(
+  commentsElement,
+  commentsValiate
+);
+
+pristine.addValidator(
+  hashtagsElement,
+  hashtagValidate
+);
+
 const onDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -63,23 +76,24 @@ const onDocumentEscKeydown = (evt) => {
   }
 };
 
-const uploadFileElement = document.querySelector('.upload-file');
 const imgEditing = document.querySelector('.img-upload__overlay');
-
+const formElement = document.querySelector('#upload-file');
+// Открытие окна загрузки
 const openUploadFormPicture = () => {
-  uploadFileElement.onchange = function () {
+  formElement.addEventListener('click', () => {
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
-  };
+  });
   document.addEventListener('keydown', onDocumentEscKeydown);
+  closeUploadFormPicture ();
   cleanUploadFile ();
 };
 
 function cleanUploadFile() {
-  uploadFileElement.innerHTML = '';
+  formElement.innerHTML = '';
 }
 
-const uploadCancelElement = document.querySelector('.upload-cancel');
+const uploadCancelElement = document.querySelector('.img-upload__cancel');
 
 function closeUploadFormPicture () {
   uploadCancelElement.addEventListener('click', () => {
@@ -88,4 +102,4 @@ function closeUploadFormPicture () {
   });
 }
 
-export {openUploadFormPicture, commentsValiate, hashtagValidate, formImgUploadPristine};
+export {openUploadFormPicture};
