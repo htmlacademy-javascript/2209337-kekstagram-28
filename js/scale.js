@@ -16,7 +16,7 @@ const getScaleValue = () => {
   scaleUploadImg.style.transform = `scale(${currentValue / 100})`;
 };
 
-const getMinScale = () => {
+const onClickSmallerButton = () => {
   const currentValue = parseFloat(scaleValue.value);
 
   if (currentValue === MIN_SCALE_VALUE) {
@@ -26,19 +26,20 @@ const getMinScale = () => {
   getScaleValue();
 };
 
-const getMaxScale = () => {
+const onClickBiggerButton = () => {
   const currentValue = parseFloat(scaleValue.value);
 
   if (currentValue === MAX_SCALE_VALUE) {
     return false;
   }
+
   scaleValue.value = `${currentValue + STEP_VALUE}%`;
   getScaleValue();
 };
 
 const initScale = () => {
-  scaleSmallerButton.addEventListener('click', getMinScale);
-  scaleBiggerButton.addEventListener('click', getMaxScale);
+  scaleSmallerButton.addEventListener('click', onClickSmallerButton);
+  scaleBiggerButton.addEventListener('click', onClickBiggerButton);
 };
 
 export {initScale};
