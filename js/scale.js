@@ -11,7 +11,7 @@ const scaleUploadImg = document.querySelector('.img-upload__preview img');
  * @param (value) значение масштаба выбраное пользователем
  * @returns значение записаное в стили
  */
-const getScaleValue = () => {
+const setScaleToPicture = () => {
   const currentValue = parseFloat(scaleValue.value);
   scaleUploadImg.style.transform = `scale(${currentValue / 100})`;
 };
@@ -23,7 +23,7 @@ const onClickSmallerButton = () => {
     return false;
   }
   scaleValue.value = `${currentValue - STEP_VALUE}%`;
-  getScaleValue();
+  setScaleToPicture();
 };
 
 const onClickBiggerButton = () => {

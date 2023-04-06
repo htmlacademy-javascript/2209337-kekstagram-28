@@ -11,13 +11,15 @@ const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
-  // errorTextClass: ''
 });
 
 // Отправка формы
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  const isPristineValidate = pristine.validate();
+  if (isPristineValidate) {
+    evt.target.submit();
+  }
 });
 
 const hashtagsElement = document.querySelector('.text__hashtags');
@@ -59,15 +61,17 @@ const commentsValiate = () => {
   }
 };
 
-pristine.addValidator(
-  commentsElement,
-  commentsValiate
-);
+const formValidate = () => {
+  pristine.addValidator(
+    commentsElement,
+    commentsValiate
+  );
 
-pristine.addValidator(
-  hashtagsElement,
-  hashtagValidate
-);
+  pristine.addValidator(
+    hashtagsElement,
+    hashtagValidate
+  );
+};
 
 const onDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -78,6 +82,7 @@ const onDocumentEscKeydown = (evt) => {
 
 const imgEditing = document.querySelector('.img-upload__overlay');
 const formElement = document.querySelector('#upload-file');
+
 // Открытие окна загрузки
 const openUploadFormPicture = () => {
   formElement.addEventListener('click', () => {
@@ -86,20 +91,17 @@ const openUploadFormPicture = () => {
   });
   document.addEventListener('keydown', onDocumentEscKeydown);
   closeUploadFormPicture ();
-  cleanUploadFile ();
 };
 
-function cleanUploadFile() {
-  formElement.innerHTML = '';
-}
-
 const uploadCancelElement = document.querySelector('.img-upload__cancel');
+const scaleUploadImg = document.querySelector('.img-upload__preview img');
 
 function closeUploadFormPicture () {
   uploadCancelElement.addEventListener('click', () => {
     imgEditing.classList.add('hidden');
     document.body.classList.remove('modal-open');
+    scaleUploadImg.style.transform = 'none';
   });
 }
 
-export {openUploadFormPicture};
+export {openUploadFormPicture, formValidate};

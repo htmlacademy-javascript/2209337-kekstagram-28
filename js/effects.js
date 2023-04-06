@@ -1,7 +1,6 @@
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
-const imgUploadElement = document.querySelector('.img-upload__preview');
-const optionEffectElement = document.querySelector('.effects__radio');
+const optionEffectElement = document.querySelectorAll('.effects__radio');
 
 valueElement.value = 100;
 
@@ -48,33 +47,28 @@ const examplesEffect = {
   }
 };
 
-/**
- * Функция для выбора эффекта
- */
-const choiceEffect = (slidrValue) => {
+//Функция для выбора эффекта
+const getEffect = (nameEffect, sliderValue) => {
   const effectStyle = {
-    GRAYSCALE: `filter: grayscale(${slidrValue})`,
-    SEPIA: `filter: sepia(${slidrValue})`,
-    INVERT: `filter: invert(${slidrValue}`,
-    BLUR: `filter: blur(${slidrValue}`,
-    BRIGHTNESS: `filter: brightness(${slidrValue}`,
+    GRAYSCALE: `filter: grayscale(${sliderValue})`,
+    SEPIA: `filter: sepia(${sliderValue})`,
+    INVERT: `filter: invert(${sliderValue}`,
+    BLUR: `filter: blur(${sliderValue}`,
+    BRIGHTNESS: `filter: brightness(${sliderValue}`,
   };
+  return effectStyle[nameEffect];
 };
 
 sliderElement.noUiSlider.on('update', () => {
   const slidrValue = sliderElement.noUiSlider.get();
   valueElement.value = slidrValue;
-  choiceEffect(slidrValue);
+  getEffect(slidrValue);
 });
 
 optionEffectElement.addEventListener('change', (evt) => {
-  evt.target.checked;
-  sliderElement.noUiSlider.updateOptions({
-    range: {
-      min: MIN,
-      max: MAX,
-    },
-    start: START,
-    step: STEP,
-  });
-})
+  optionEffectElement.forEach((element) => element);
+  const currentEffect = evt.target.value;
+  sliderElement.noUiSlider.updateOptions(examplesEffect[currentEffect]);
+});
+
+export {optionEffectElement};
