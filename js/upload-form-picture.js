@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, showAlert} from './util.js';
 
 const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_NUMBERS = 5;
@@ -14,14 +14,32 @@ const pristine = new Pristine(uploadForm, {
 });
 
 // Отправка формы
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isPristineValidate = pristine.validate();
-  if (isPristineValidate) {
-    evt.target.submit();
-  }
-});
+const setUploadForm = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isPristineValidate = pristine.validate();
+    if (isPristineValidate) {
+      const formData = new FormData(evt.target);
 
+      fetch (
+        'https://28.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      ).then((response) => {
+        if (response.ok) {
+          onSuccess();
+        } else {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        }
+      })
+        .catch(() => {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        });
+    }
+  });
+};
 const hashtagsElement = document.querySelector('.text__hashtags');
 
 //Валидация хэштегов
@@ -104,4 +122,4 @@ function closeUploadFormPicture () {
   });
 }
 
-export {openUploadFormPicture, formValidate};
+export {openUploadFormPicture, formValidate, setUploadForm};
