@@ -1,9 +1,14 @@
 import {isEscapeKey, showAlert} from './util.js';
+import {sendData} from './api.js';
 
 const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_NUMBERS = 5;
 const COMMENT_MAX_LENGTH = 140;
-
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+const submitButton = document.querySelector('.img-upload__submit')
 
 // Инизиализация Pristine.js
 const uploadForm = document.querySelector('#upload-select-image');
@@ -12,6 +17,16 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
 });
+// Блокировка кнопки отправки
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+//Разблокировка кнопки отправки
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 // Отправка формы
 const setUploadForm = (onSuccess) => {
@@ -19,27 +34,19 @@ const setUploadForm = (onSuccess) => {
     evt.preventDefault();
     const isPristineValidate = pristine.validate();
     if (isPristineValidate) {
-      const formData = new FormData(evt.target);
-
-      fetch (
-        'https://28.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then((response) => {
-        if (response.ok) {
-          onSuccess();
-        } else {
-          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-        }
-      })
-        .catch(() => {
-          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-        });
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            showAlert(err.messege);
+          }
+        )
+        .finally(unblockSubmitButton);
     }
   });
 };
+
 const hashtagsElement = document.querySelector('.text__hashtags');
 
 //Валидация хэштегов
