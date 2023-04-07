@@ -8,7 +8,7 @@ const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
 };
-const submitButton = document.querySelector('.img-upload__submit')
+const submitButton = document.querySelector('.img-upload__submit');
 
 // Инизиализация Pristine.js
 const uploadForm = document.querySelector('#upload-select-image');
