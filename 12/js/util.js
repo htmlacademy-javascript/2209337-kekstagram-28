@@ -2,7 +2,6 @@ const errorMessageTemplate = document.querySelector('#error');
 const errorButton = document.querySelector('.error__button');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-const isEnterKey = (evt) => evt.key === 'Enter';
 
 // Сообщение ошибки
 const showAlert = () => {
@@ -11,6 +10,30 @@ const showAlert = () => {
   errorButton.addEventListener('click', () => {
     newErrorMessageTemplate.remove();
   });
+  document.addEventListener('click', () => {
+    newErrorMessageTemplate.remove();
+    document.addEventListener.remove();
+  });
+  // const onEscKeydown = (evt) => {
+  //   if (isEscapeKey(evt)) {
+  //     newErrorMessageTemplate.remove();
+  //   }
+  // };
 };
 
-export {isEscapeKey, isEnterKey, showAlert};
+const successMessegeTemplate = document.querySelector('#success');
+const successButton = document.querySelector('.success__button');
+
+const showSuccess = () => {
+  const newSuccessMessegeTemplate = successMessegeTemplate.cloneNode(true);
+  document.body.append(newSuccessMessegeTemplate);
+  successButton.addEventListener('click', () => {
+    newSuccessMessegeTemplate.remove();
+  });
+  document.addEventListener('click', () => {
+    newSuccessMessegeTemplate.remove();
+    document.addEventListener.remove();
+  });
+};
+
+export {isEscapeKey, showAlert, showSuccess};
