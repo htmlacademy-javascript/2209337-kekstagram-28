@@ -1,4 +1,4 @@
-import {isEscapeKey, showAlert} from './util.js';
+import {isEscapeKey, showAlert, showSuccess} from './util.js';
 import {sendData} from './api.js';
 
 const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -17,6 +17,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
 });
+
 // Блокировка кнопки отправки
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -36,13 +37,17 @@ const setUploadForm = (onSuccess) => {
     if (isPristineValidate) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
+        .then(
+          showSuccess()
+        )
         .catch(
           (err) => {
             showAlert(err.messege);
           }
         )
-        .finally(unblockSubmitButton);
+        .finally(() => {
+          unblockSubmitButton();
+        });
     }
   });
 };
@@ -115,18 +120,20 @@ const openUploadFormPicture = () => {
     document.body.classList.add('modal-open');
   });
   document.addEventListener('keydown', onDocumentEscKeydown);
-  closeUploadFormPicture ();
 };
 
-const uploadCancelElement = document.querySelector('.img-upload__cancel');
 const scaleUploadImg = document.querySelector('.img-upload__preview img');
 
 function closeUploadFormPicture () {
-  uploadCancelElement.addEventListener('click', () => {
-    imgEditing.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    scaleUploadImg.style.transform = 'none';
-  });
+  imgEditing.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  scaleUploadImg.style.transform = 'none';
 }
+
+const uploadCancelElement = document.querySelector('.img-upload__cancel');
+
+uploadCancelElement.addEventListener('click', () => {
+  closeUploadFormPicture();
+});
 
 export {openUploadFormPicture, formValidate, setUploadForm};
