@@ -5,7 +5,7 @@ const Route = {
 };
 const Method = {
   GET: 'GET',
-  POST: 'SEND',
+  SEND: 'POST',
 };
 const errorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
