@@ -15,17 +15,19 @@ const errorMessageTemplate = document.querySelector('#error');
 const showAlert = () => {
   const newErrorMessageTemplate = errorMessageTemplate.cloneNode(true);
   document.body.append(newErrorMessageTemplate);
+  const newErrorMessage = document.querySelector('.error');
   document.addEventListener('keydown', onHideMessageEvent);
-  newErrorMessageTemplate.addEventListener('click', onHideMessageEvent);
+  newErrorMessage.addEventListener('click', onHideMessageEvent);
 };
 
 const successMessageTemplate = document.querySelector('#success');
 // Сообщение успеха
 const showSuccess = () => {
-  const newSuccessMessageTemplate = successMessageTemplate.cloneNode(true);
+  const newSuccessMessageTemplate = successMessageTemplate.content.cloneNode(true);
   document.body.append(newSuccessMessageTemplate);
+  const newSuccessMessage = document.querySelector('.success');
   document.addEventListener('keydown', onHideMessageEvent);
-  newSuccessMessageTemplate.addEventListener('click', onHideMessageEvent);
+  newSuccessMessage.addEventListener('click', onHideMessageEvent);
 };
 
 function hideMessege () {

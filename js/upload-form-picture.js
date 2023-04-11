@@ -54,10 +54,19 @@ const onDocumentEscKeydown = (evt) => {
 
 const imgEditing = document.querySelector('.img-upload__overlay');
 const formElement = document.querySelector('.img-upload__form');
+const imgUploadFile = document.querySelector('.img-upload__start');
+const imgInput = document.querySelector('.img-upload__input');
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 // Открытие окна загрузки
 const openUploadFormPicture = () => {
   formElement.addEventListener('change', () => {
+    const file = imgInput.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    if (matches) {
+      imgUploadFile.src = URL.createObjectURL(file);
+    }
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
   });
