@@ -11,6 +11,7 @@ const onHideMessageEvent = (evt) => {
 };
 
 const errorMessageTemplate = document.querySelector('#error');
+
 // Сообщение ошибки
 const showAlertUpload = () => {
   const newErrorMessageTemplate = errorMessageTemplate.cloneNode(true);
@@ -21,6 +22,7 @@ const showAlertUpload = () => {
 };
 
 const successMessageTemplate = document.querySelector('#success');
+
 // Сообщение успеха
 const showSuccess = () => {
   const newSuccessMessageTemplate = successMessageTemplate.content.cloneNode(true);
