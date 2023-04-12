@@ -15,6 +15,7 @@ const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
 };
+
 //Разблокировка кнопки отправки
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
