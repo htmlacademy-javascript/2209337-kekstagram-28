@@ -1,7 +1,7 @@
 const PICTURES_COUNT = 10;
 const Filter = {
   DEFAULT: 'filter-default',
-  RANDOM: 'filter-ramdom',
+  RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
 
@@ -9,7 +9,7 @@ const filterElement = document.querySelector('.img-filters');
 let currentFilter = Filter.DEFAULT;
 let pictures = [];
 
-const sortRandomly = () => Math.random - 0.5;
+const sortRandomly = () => Math.random() - 0.5;
 
 const sortByComments = (pictureA, pictureB) =>
   pictureB.comments.length - pictureA.comments.length;
@@ -38,15 +38,15 @@ const setOnFilterClick = (callback) => {
 
     filterElement
       .querySelector('.img-filters__button--active')
-      .classList.remove('.img-filters__button--active');
-    clikedButton.classList.add('.img-filters__button--active');
+      .classList.remove('img-filters__button--active');
+    clikedButton.classList.add('img-filters__button--active');
     currentFilter = clikedButton.id;
     callback(getFilteredPictures());
   });
 };
 
 const init = (loaderPicture, callback) => {
-  filterElement.classList.remove('.img-filters--inactive');
+  filterElement.classList.remove('img-filters--inactive');
   pictures = [...loaderPicture];
   setOnFilterClick(callback);
 };

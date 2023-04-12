@@ -1,7 +1,8 @@
 import {isEscapeKey} from './util.js';
 import {sendData} from './api.js';
 import {pristine} from './pristine.js';
-import {showAlert, showSuccess} from './message-upload.js';
+import {showAlertUpload, showSuccess} from './message-upload.js';
+import {cleanEffect} from './effects.js';
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -35,7 +36,7 @@ const setUploadForm = (onSuccess) => {
         )
         .catch(
           (err) => {
-            showAlert(err.messege);
+            showAlertUpload(err.messege);
           }
         )
         .finally(() => {
@@ -54,7 +55,8 @@ const onDocumentEscKeydown = (evt) => {
 
 const imgEditing = document.querySelector('.img-upload__overlay');
 const formElement = document.querySelector('.img-upload__form');
-const imgUploadFile = document.querySelector('.img-upload__start');
+const scaleUploadImg = document.querySelector('.img-upload__preview');
+const imgFile = scaleUploadImg.querySelector('img');
 const imgInput = document.querySelector('.img-upload__input');
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -65,7 +67,7 @@ const openUploadFormPicture = () => {
     const fileName = file.name.toLowerCase();
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
-      imgUploadFile.src = URL.createObjectURL(file);
+      imgFile.src = URL.createObjectURL(file);
     }
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -73,12 +75,12 @@ const openUploadFormPicture = () => {
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
-const scaleUploadImg = document.querySelector('.img-upload__preview img');
-
 function closeUploadFormPicture () {
   imgEditing.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  scaleUploadImg.style.transform = 'none';
+  document.removeEventListener('keydown', onDocumentEscKeydown);
+  scaleUploadImg.style.transform = '';
+  cleanEffect();
 }
 
 const uploadCancelElement = document.querySelector('.img-upload__cancel');

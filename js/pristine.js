@@ -21,7 +21,7 @@ const isValidHashtags = (hashtags) => {
   if (!hashtags) {
     return true;
   }
-  const hashtagArray = hashtags.toLowerCase().trim().split(' ');
+  const hashtagArray = hashtags.replace(/^ +| +$|( ) +/g,'$1').toLowerCase().trim().split(' ');
   const newHashtagArray = new Set(hashtagArray);
   if (newHashtagArray.size === hashtagArray.length && hashtagArray.length <= HASHTAG_MAX_COUNT) {
     return hashtagArray.every((hashtag) => HASHTAG_VALID_REGEX.test(hashtag));
@@ -54,9 +54,9 @@ const getErrorMessage = (hashtags) => {
 
 const isValidComment = (comment) => comment.length <= COMMENT_MAX_LENGTH;
 
-const uploadForm = document.querySelector('.img-upload__form');
+const formUpload = document.querySelector('.img-upload__form');
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(formUpload, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
   errorTextClass:'img-upload__field-wrapper--error',

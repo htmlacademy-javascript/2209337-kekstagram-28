@@ -119,9 +119,15 @@ const selectEffects = () => {
   updateSlider();
 };
 
+const cleanEffect = () => {
+  imageUploadElement.style.filter = 'none';
+  valueElement.value = '100%';
+  currentEffect = DEFAULT_EFFECT;
+};
+
 hideSlider();
 
 effectsElement.addEventListener('change', onEffectsChange);
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
-export {selectEffects};
+export {selectEffects, cleanEffect};
