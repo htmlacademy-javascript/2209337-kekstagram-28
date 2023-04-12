@@ -3,11 +3,18 @@ import {openBigPicture} from './open-big-picture.js';
 const thumbnailsWrapper = document.querySelector('.pictures');
 const thumbnailsTemplate = document.querySelector('#picture').content;
 
+const cleanPostPicture = () => {
+  const pictureList = document.querySelectorAll('.picture');
+  pictureList.forEach((item) => {
+    item.remove();
+  });
+};
 /**
  * Отрисовавает миниатюры изображение и при клике открывает большое изображение
  * @parm {element} element — элементы массива
  */
 const renderThumbnails = (similarPosts) => {
+  cleanPostPicture();
   const similarPostFragment = document.createDocumentFragment();
 
   similarPosts.forEach((similarPost) => {
@@ -23,10 +30,6 @@ const renderThumbnails = (similarPosts) => {
     similarPostFragment.appendChild(newPictureTemplate);
   });
   thumbnailsWrapper.appendChild(similarPostFragment);
-};
-
-const cleanPostPicture = () => {
-  thumbnailsWrapper.innerHTML = '';
 };
 
 export {renderThumbnails, cleanPostPicture};

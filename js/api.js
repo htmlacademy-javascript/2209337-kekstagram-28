@@ -12,7 +12,7 @@ const errorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-const load = (route, errorText, method = Method.GET, body = null) =>
+const load = (route, error, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
       if (!response.ok) {
@@ -21,11 +21,11 @@ const load = (route, errorText, method = Method.GET, body = null) =>
       return response.json();
     })
     .catch(() => {
-      throw new Error(errorText);
+      throw new Error(error);
     });
 
 const getData = () => load(Route.GET_DATA, errorText.GET_DATA);
 
-const sendData = (body) => load(Route.SEND_DATA, errorText.SEND_DATA, Method.POST, body);
+const sendData = (body) => load(Route.SEND_DATA, errorText.SEND_DATA, Method.SEND, body);
 
 export {getData, sendData};

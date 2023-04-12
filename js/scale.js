@@ -5,7 +5,7 @@ const STEP_VALUE = 25;
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-const scaleUploadImg = document.querySelector('.img-upload__preview img');
+const scaleUploadImg = document.querySelector('.img-upload__preview');
 
 /**
  * @param (value) значение масштаба выбраное пользователем
@@ -34,7 +34,7 @@ const onClickBiggerButton = () => {
   }
 
   scaleValue.value = `${currentValue + STEP_VALUE}%`;
-  getScaleValue();
+  setScaleToPicture();
 };
 
 const initScale = () => {
