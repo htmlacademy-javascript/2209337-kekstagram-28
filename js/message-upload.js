@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 
+const ALERT_SHOW_TIME = 5000;
+
 const onHideMessageEvent = (evt) => {
   if (isEscapeKey(evt) ||
     evt.target.matches('.success__button') ||
@@ -43,8 +45,6 @@ function hideMessege () {
   }
   document.removeEventListener('keydown', onHideMessageEvent);
 }
-
-const ALERT_SHOW_TIME = 5000;
 
 const showAlertNetwork = (message) => {
   const alertContainer = document.createElement('div');

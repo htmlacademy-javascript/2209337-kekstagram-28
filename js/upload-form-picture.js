@@ -47,7 +47,7 @@ const setUploadForm = (onSuccess) => {
   });
 };
 
-const onDocumentEscKeydown = (evt) => {
+const onClickDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadFormPicture();
@@ -73,13 +73,13 @@ const openUploadFormPicture = () => {
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
   });
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  document.addEventListener('keydown', onClickDocumentEscKeydown);
 };
 
 function closeUploadFormPicture () {
   imgEditing.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentEscKeydown);
+  document.removeEventListener('keydown', onClickDocumentEscKeydown);
   scaleUploadImg.style.transform = '';
   cleanEffect();
 }

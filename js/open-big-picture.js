@@ -33,27 +33,29 @@ const renderComments = (allComments) => {
   });
   commentListElement.appendChild(commentFragment);
 
-  commentCountElement.firstChild.textContent = `${firstComments.length} из ${allComments.length}`;
+  commentCountElement.firstChild.textContent = `${firstComments.length} из `;
 
   // Проверка на все ли комментарии отрисованы -> Показываем\убираем кнопку
   if (firstComments === allComments) {
-    commentLoadButton.classList.remove('hidden');
-  } else if (firstComments < allComments) {
-    commentLoadButton.addEventListener('click', () => {
-      const followComments = allComments.slice(1, MAX_COMMENTS_NUMBER);
-      const commentFragmentFollow = document.createDocumentFragment();
-      followComments.forEach((comment) => {
-        const commentElementFollow = renderComments(comment);
-        commentFragmentFollow.appendChild(commentElementFollow);
-      });
-      commentListElement.appendChild(commentFragmentFollow);
-
-      commentCountElement.firstChild.textContent = `${followComments.length} из ${allComments.length}`;
-    });
+    commentLoadButton.classList.add('hidden');
+    commentListElement.innerHTML = '';
+  } else {
+    commentLoadButton.addEventListener('click', () => onLoadButtonClick);
   }
 };
 
-const onDocumentEscKeydown = (evt) => {
+function onLoadButtonClick() {
+  const followComments = allComments.slice(0, MAX_COMMENTS_NUMBER);
+  const commentFragmentFollow = document.createDocumentFragment();
+  followComments.forEach((comment) => {
+    const commentElementFollow = renderComments(comment);
+    commentFragmentFollow.appendChild(commentElementFollow);
+    commentListElement.innerHTML = '';
+  });
+  commentCountElement.firstChild.textContent = `${followComments.length} из ${allComments.length}`;
+}
+
+const onClickDocumentEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePicture();
@@ -70,15 +72,16 @@ const openBigPicture = ({url, likes, comments, description}) => {
   bigPictureElement.querySelector('.likes-count').textContent = likes;
   bigPictureElement.querySelector('.comments-count').textContent = comments.length;
   bigPictureElement.querySelector('.social__caption').textContent = description;
-
+  commentListElement.innerHTML = '';
   renderComments(comments);
+  onLoadButtonClick();
 
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  document.addEventListener('keydown', onClickDocumentEscKeydown);
 };
 
 function closePicture () {
   bigPictureElement.classList.add('hidden');
-  document.removeEventListener('keydown', onDocumentEscKeydown);
+  document.removeEventListener('keydown', onClickDocumentEscKeydown);
   document.body.classList.remove('modal-open');
 }
 

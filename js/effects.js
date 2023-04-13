@@ -95,7 +95,7 @@ const updateSlider = () => {
   }
 };
 
-const onEffectsChange = (evt) => {
+const onChangeEffects = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
@@ -104,7 +104,7 @@ const onEffectsChange = (evt) => {
   updateSlider();
 };
 
-const onSliderUpdate = () => {
+const onUpdateSlider = () => {
   const sliderValue = sliderElement.noUiSlider.get();
   if (isDefault()) {
     imageUploadElement.style.filter = DEFAULT_EFFECT.style;
@@ -123,11 +123,12 @@ const cleanEffect = () => {
   imageUploadElement.style.filter = 'none';
   valueElement.value = '100%';
   currentEffect = DEFAULT_EFFECT;
+  updateSlider();
 };
 
 hideSlider();
 
-effectsElement.addEventListener('change', onEffectsChange);
-sliderElement.noUiSlider.on('update', onSliderUpdate);
+effectsElement.addEventListener('change', onChangeEffects);
+sliderElement.noUiSlider.on('update', onUpdateSlider);
 
 export {selectEffects, cleanEffect};

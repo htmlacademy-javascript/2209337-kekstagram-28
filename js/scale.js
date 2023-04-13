@@ -37,9 +37,9 @@ const onClickBiggerButton = () => {
   setScaleToPicture();
 };
 
-const initScale = () => {
+const getInitScale = () => {
   scaleSmallerButton.addEventListener('click', onClickSmallerButton);
   scaleBiggerButton.addEventListener('click', onClickBiggerButton);
 };
 
-export {initScale};
+export {getInitScale};
