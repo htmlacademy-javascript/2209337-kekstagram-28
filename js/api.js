@@ -5,7 +5,7 @@ const Route = {
 };
 const Method = {
   GET: 'GET',
-  POST: 'SEND',
+  POST: 'POST',
 };
 const errorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
@@ -26,6 +26,6 @@ const load = (route, error, method = Method.GET, body = null) =>
 
 const getData = () => load(Route.GET_DATA, errorText.GET_DATA);
 
-const sendData = (body) => load(Route.SEND_DATA, errorText.SEND_DATA, Method.SEND, body);
+const sendData = (body) => load(Route.SEND_DATA, errorText.SEND_DATA, Method.POST, body);
 
 export {getData, sendData};

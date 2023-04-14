@@ -4,11 +4,8 @@ const commentInput = document.querySelector('.text__description');
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAG_MAX_COUNT = 5;
 
-
 const HASHTAG_VALID_REGEX = /^#[a-zа-яё0-9]{1,19}$/;
-
 const HASHTAG_FIRST_SYMBOL = /^#/;
-
 const HASHTAG_CONTENT = /[a-zа-яё0-9]/;
 
 const ERROR_HASHTAG_REPEAT = 'Хэштеги не должны повторяться';
@@ -31,11 +28,11 @@ const isValidHashtags = (hashtags) => {
 const getErrorMessage = (hashtags) => {
   const hashtagArray = hashtags.toLowerCase().trim().split(' ');
   const newHashtagArray = new Set(hashtagArray);
-  if (newHashtagArray.size !== hashtagArray.length) {
-    return ERROR_HASHTAG_REPEAT;
-  }
   if (hashtagArray.length > HASHTAG_MAX_COUNT) {
     return ERROR_HASHTAG_COUNT;
+  }
+  if (newHashtagArray.size !== hashtagArray.length) {
+    return ERROR_HASHTAG_REPEAT;
   }
   if (newHashtagArray.size === hashtagArray.length && hashtagArray.length <= HASHTAG_MAX_COUNT) {
     for (let i = 0; i <= hashtagArray.length; i++) {
@@ -62,9 +59,7 @@ const pristine = new Pristine(formUpload, {
   errorTextClass:'img-upload__field-wrapper--error',
 });
 
-
 pristine.addValidator(hashtagInput, isValidHashtags, getErrorMessage);
 pristine.addValidator(commentInput, isValidComment, 'Длина комментария должна быть не более 140 символов');
-
 
 export {pristine};

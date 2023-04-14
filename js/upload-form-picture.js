@@ -32,6 +32,7 @@ const setUploadForm = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(
+          closeUploadFormPicture(),
           showSuccess(),
           onSuccess,
         )
@@ -58,8 +59,11 @@ const imgEditing = document.querySelector('.img-upload__overlay');
 const formElement = document.querySelector('.img-upload__form');
 const scaleUploadImg = document.querySelector('.img-upload__preview');
 const imgFile = scaleUploadImg.querySelector('img');
-const imgInput = document.querySelector('.img-upload__input');
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const imgInput = document.querySelector('.img-upload__input');
+const scaleValue = document.querySelector('.scale__control--value');
+const hashtagInput = document.querySelector('.text__hashtags');
+const commentInput = document.querySelector('.text__description');
 
 // Открытие окна загрузки
 const openUploadFormPicture = () => {
@@ -72,8 +76,8 @@ const openUploadFormPicture = () => {
     }
     imgEditing.classList.remove('hidden');
     document.body.classList.add('modal-open');
+    document.addEventListener('keydown', onClickDocumentEscKeydown);
   });
-  document.addEventListener('keydown', onClickDocumentEscKeydown);
 };
 
 function closeUploadFormPicture () {
@@ -81,7 +85,11 @@ function closeUploadFormPicture () {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onClickDocumentEscKeydown);
   scaleUploadImg.style.transform = '';
+  scaleValue.value = '100%';
   cleanEffect();
+  imgInput.value = '';
+  hashtagInput.value = '';
+  commentInput.value = '';
 }
 
 const uploadCancelElement = document.querySelector('.img-upload__cancel');

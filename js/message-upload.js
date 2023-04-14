@@ -16,7 +16,7 @@ const errorMessageTemplate = document.querySelector('#error');
 
 // Сообщение ошибки
 const showAlertUpload = () => {
-  const newErrorMessageTemplate = errorMessageTemplate.cloneNode(true);
+  const newErrorMessageTemplate = errorMessageTemplate.content.cloneNode(true);
   document.body.append(newErrorMessageTemplate);
   const newErrorMessage = document.querySelector('.error');
   document.addEventListener('keydown', onHideMessageEvent);
