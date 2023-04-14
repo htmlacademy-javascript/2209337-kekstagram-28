@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 
+const ALERT_SHOW_TIME = 5000;
+
 const onHideMessageEvent = (evt) => {
   if (isEscapeKey(evt) ||
     evt.target.matches('.success__button') ||
@@ -14,7 +16,7 @@ const errorMessageTemplate = document.querySelector('#error');
 
 // Сообщение ошибки
 const showAlertUpload = () => {
-  const newErrorMessageTemplate = errorMessageTemplate.cloneNode(true);
+  const newErrorMessageTemplate = errorMessageTemplate.content.cloneNode(true);
   document.body.append(newErrorMessageTemplate);
   const newErrorMessage = document.querySelector('.error');
   document.addEventListener('keydown', onHideMessageEvent);
@@ -43,8 +45,6 @@ function hideMessege () {
   }
   document.removeEventListener('keydown', onHideMessageEvent);
 }
-
-const ALERT_SHOW_TIME = 5000;
 
 const showAlertNetwork = (message) => {
   const alertContainer = document.createElement('div');
